@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.FXMLCrearUsuarioNuevoController">
    <top>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo usuario" textAlignment="CENTER" underline="true" BorderPane.alignment="CENTER">
          <font>
@@ -29,7 +28,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="152.0" prefWidth="400.0" spacing="20.0">
                <children>
-                  <Circle fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                  <Circle fx:id="AvatarCircle" fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
                      <HBox.margin>
                         <Insets bottom="20.0" />
                      </HBox.margin>
@@ -37,7 +36,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Circle>
-                  <Button mnemonicParsing="false" style="-fx-border-color: LightGray; -fx-border-radius: 50; -fx-background-color: none;" text="Cambiar avatar">
+                  <Button mnemonicParsing="false" onMouseClicked="#ChangeAvatarButton" style="-fx-border-color: LightGray; -fx-border-radius: 50; -fx-background-color: none;" text="Cambiar avatar">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -55,7 +54,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Text>
-            <TextField style="-fx-background-color: none; -fx-border-color: black;">
+            <TextField fx:id="UserName" style="-fx-background-color: none; -fx-border-color: black;">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -71,7 +70,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <TextField style="-fx-background-color: none; -fx-border-color: black;">
+            <TextField fx:id="Email" style="-fx-background-color: none; -fx-border-color: black;">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -87,7 +86,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <TextField style="-fx-background-color: none; -fx-border-color: black;">
+            <TextField fx:id="Password" style="-fx-background-color: none; -fx-border-color: black;">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -103,7 +102,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <TextField style="-fx-background-color: none; -fx-border-color: black;">
+            <TextField fx:id="PasswordRe" style="-fx-background-color: none; -fx-border-color: black;">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -119,21 +118,14 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <DatePicker style="-fx-background-color: none; -fx-border-color: black;">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </DatePicker>
+            <DatePicker style="-fx-background-color: none; -fx-border-color: black;" />
          </children>
       </VBox>
    </center>
    <bottom>
       <HBox alignment="CENTER" prefHeight="67.0" prefWidth="400.0" spacing="25.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: black;" text="Crear usuario" textFill="WHITE">
+            <Button mnemonicParsing="false" onMouseClicked="#CreateUserButton" style="-fx-background-color: black;" text="Crear usuario" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -141,7 +133,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: black;" text="Cancelar" textFill="WHITE">
+            <Button mnemonicParsing="false" onMouseClicked="#CancelButton" style="-fx-background-color: black;" text="Cancelar" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

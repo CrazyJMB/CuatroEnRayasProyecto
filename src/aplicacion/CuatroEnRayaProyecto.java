@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cuatroenrayaproyecto;
+package aplicacion;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +25,7 @@ public class CuatroEnRayaProyecto extends Application {
         
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.setTitle("Inicio de sesion");
         stage.show();
     }
 

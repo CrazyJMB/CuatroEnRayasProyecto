@@ -48,6 +48,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
+      <Text onMouseClicked="#recuperarContraseña" strokeType="OUTSIDE" strokeWidth="0.0" text="Recuperar contraseña" underline="true" />
       <Button cancelButton="true" mnemonicParsing="false" onMouseClicked="#LogInAccount" style="-fx-border-image-width: 0; -fx-background-color: Black;" text="Log In" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB" size="16.0" />
