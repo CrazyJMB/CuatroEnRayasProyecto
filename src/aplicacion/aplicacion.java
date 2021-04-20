@@ -15,11 +15,11 @@ import javafx.stage.Stage;
  *
  * @author CrazyJMB
  */
-public class CuatroEnRayaProyecto extends Application {
+public class aplicacion extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/FXMLCuatroEnRaya.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/LogInApp.fxml"));
         
         Scene scene = new Scene(root);
         

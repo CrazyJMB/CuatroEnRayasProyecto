@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author CrazyJMB
  */
-public class FXMLConnectaGameController implements Initializable {
+public class InGameScreenController implements Initializable {
 
     /**
      * Initializes the controller class.

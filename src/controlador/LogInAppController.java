@@ -7,14 +7,15 @@ package controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -23,16 +24,18 @@ import javafx.stage.Stage;
  *
  * @author CrazyJMB
  */
-public class FXMLCuatroEnRayaController implements Initializable {
+public class LogInAppController implements Initializable {
 
     @FXML
-    private TextField UserName;
+    private TextField username;
     @FXML
-    private TextField UserPassword;
+    private ImageView facebookLogIn;
     @FXML
-    private Label CrearNuevaCuentaButton;
+    private ImageView googleLogIn;
     @FXML
-    private Label VerRankingButton;
+    private ImageView appleLogIn;
+    @FXML
+    private TextField password;
 
     /**
      * Initializes the controller class.
@@ -43,26 +46,29 @@ public class FXMLCuatroEnRayaController implements Initializable {
     }    
 
     @FXML
-    private void LogInAccount(MouseEvent event) {
+    private void LogInAction(ActionEvent event) {
     }
 
     @FXML
-    private void CreateNewAccount(MouseEvent event) {
+    private void rememberPassword(MouseEvent event) {
+    }
+
+    @FXML
+    private void createNewAccount(MouseEvent event) {
         try {
-            Parent crearUsuarioParent = FXMLLoader.load(getClass().getResource("/vista/FXMLCrearUsuarioNuevo.fxml"));
-            Scene crearUsuarioScene = new Scene(crearUsuarioParent);
+            Parent newUserParent = FXMLLoader.load(getClass().getResource("/vista/NewUserScreen.fxml"));
+            Scene newUserScene = new Scene(newUserParent);
             
             // Se obtiene la informacion de la ventana (Stage)
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Creación de usuario");
-            window.setScene(crearUsuarioScene);
+            window.setTitle("Inicio de sesion");
+            window.setScene(newUserScene);
             window.setResizable(false);
             window.show();
             
         } catch (Exception e) {
             System.out.println("No se pudo cargar la escena");
         }
-        
     }
     
 }

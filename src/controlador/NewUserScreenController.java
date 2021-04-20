@@ -16,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -25,20 +24,20 @@ import javafx.stage.Stage;
  *
  * @author CrazyJMB
  */
-public class FXMLCrearUsuarioNuevoController implements Initializable {
+public class NewUserScreenController implements Initializable {
 
     @FXML
-    private Circle AvatarCircle;
+    private Circle avatarViewCircle;
     @FXML
-    private DatePicker BirthDate;
+    private TextField username;
     @FXML
-    private TextField UserName;
+    private TextField email;
     @FXML
-    private TextField Email;
+    private TextField password;
     @FXML
-    private TextField Password;
+    private TextField passwordRe;
     @FXML
-    private TextField PasswordRe;
+    private DatePicker dataPicker;
 
     /**
      * Initializes the controller class.
@@ -49,19 +48,23 @@ public class FXMLCrearUsuarioNuevoController implements Initializable {
     }    
 
     @FXML
-    private void CreateUserButton(MouseEvent event) {
+    private void changeAvatar(ActionEvent event) {
     }
 
     @FXML
-    private void CancelButton(MouseEvent event) {
+    private void createNewUser(ActionEvent event) {
+    }
+
+    @FXML
+    private void cancelButton(ActionEvent event) {
         try {
-            Parent inicioSesionParent = FXMLLoader.load(getClass().getResource("/vista/FXMLCuatroEnRaya.fxml"));
-            Scene inicioSesionScene = new Scene(inicioSesionParent);
+            Parent LogInAppParent = FXMLLoader.load(getClass().getResource("/vista/LogInApp.fxml"));
+            Scene LogInAppScene = new Scene(LogInAppParent);
             
             // Se obtiene la informacion de la ventana (Stage)
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Inicio de sesion");
-            window.setScene(inicioSesionScene);
+            window.setTitle("Creación de usuario");
+            window.setScene(LogInAppScene);
             window.setResizable(false);
             window.show();
             
@@ -69,10 +72,5 @@ public class FXMLCrearUsuarioNuevoController implements Initializable {
             System.out.println("No se pudo cargar la escena");
         }
     }
-
-    @FXML
-    private void ChangeAvatarButton(MouseEvent event) {
-    }
-
     
 }
