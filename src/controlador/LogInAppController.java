@@ -47,6 +47,24 @@ public class LogInAppController implements Initializable {
 
     @FXML
     private void LogInAction(ActionEvent event) {
+        try {
+            Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/InGameScreen.fxml"));
+            Scene InGameScene = new Scene(InGameParent);
+            
+            // Se obtiene la informacion de la ventana (Stage)
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Inicio de sesion");
+            window.setScene(InGameScene);
+            //Ajustar tamaño minimo
+            window.setMinWidth(1280);
+            window.setMinHeight(720);
+            //Ventana reajustable
+            window.setResizable(true);
+            window.show();
+            
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la escena");
+        }
     }
 
     @FXML

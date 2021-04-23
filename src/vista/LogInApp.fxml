@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.LogInAppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: lightgray;" stylesheets="@../visualizacion/LogInAppStyleSheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.LogInAppController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="880.0" layoutX="400.0" pickOnBounds="true" preserveRatio="true" />
       <HBox alignment="CENTER_RIGHT" layoutX="1180.0" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: none;">
@@ -39,7 +39,7 @@
                   <Insets bottom="25.0" />
                </VBox.margin>
             </Text>
-            <TextField fx:id="username" prefHeight="45.0" promptText="Nombre de usuario" style="-fx-background-color: gainsboro;">
+            <TextField fx:id="username" prefHeight="45.0" promptText="Nombre de usuario" styleClass="username">
                <VBox.margin>
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </VBox.margin>
@@ -50,7 +50,7 @@
                   <Insets left="15.0" />
                </padding>
             </TextField>
-            <TextField fx:id="password" prefHeight="45.0" promptText="Contraseña" style="-fx-background-color: gainsboro;">
+            <TextField fx:id="password" prefHeight="45.0" promptText="Contraseña" styleClass="password">
                <VBox.margin>
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </VBox.margin>
@@ -65,28 +65,28 @@
                <children>
                   <ImageView fx:id="facebookLogIn" fitHeight="35.0" fitWidth="100.0" pickOnBounds="true">
                      <image>
-                        <Image url="@img/Facebook.png" />
+                        <Image url="@../img/Facebook.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="googleLogIn" fitHeight="35.0" fitWidth="100.0" pickOnBounds="true">
                      <image>
-                        <Image url="@img/Google.png" />
+                        <Image url="@../img/Google.png" />
                      </image></ImageView>
                   <ImageView fx:id="appleLogIn" fitHeight="35.0" fitWidth="100.0" pickOnBounds="true">
                      <image>
-                        <Image url="@img/Apple.png" />
+                        <Image url="@../img/Apple.png" />
                      </image></ImageView>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#LogInAction" prefHeight="65.0" prefWidth="65.0" style="-fx-background-color: none; -fx-border-radius: 20; -fx-border-color: #00000081;" text="→" textFill="#00000081">
+            <Button mnemonicParsing="false" onAction="#LogInAction" prefHeight="65.0" prefWidth="65.0" styleClass="logInButton" text="→" textFill="#00000081">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="65.0" top="120.0" />
+                  <Insets bottom="65.0" top="110.0" />
                </VBox.margin>
             </Button>
-            <Label onMouseClicked="#rememberPassword" text="RECORDAR CONTRASEÑA" textFill="#00000080">
+            <Label onMouseClicked="#rememberPassword" styleClass="rememberPassword" text="RECORDAR CONTRASEÑA" textFill="#00000080">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -94,7 +94,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <Label onMouseClicked="#createNewAccount" text="CREAR NUEVA CUENTA" textFill="#00000080">
+            <Label onMouseClicked="#createNewAccount" styleClass="createNewAccount" text="CREAR NUEVA CUENTA" textFill="#00000080">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -108,6 +108,9 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
                   </Label>
                </children>
                <opaqueInsets>
