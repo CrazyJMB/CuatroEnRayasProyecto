@@ -36,7 +36,12 @@ import model.Player;
  */
 public class LogInAppController implements Initializable {
 
-    private Connect4 db = null;
+    // Player comun en el juego
+    public static Player player;
+    
+    // Base de datos
+    private Connect4 db;
+    
     @FXML
     private TextField username;
     @FXML
@@ -75,7 +80,7 @@ public class LogInAppController implements Initializable {
         // Comprobamos que el usuario existe en la base de datos
         if (!"".equals(username.getText()) || !"".equals(password.getText())) {
             // Si han introducido datos
-            Player player = LogInCheckInfo();
+            player = LogInCheckInfo();
             if (player == null) {
                 // Los datos son incorrectos
                 if (db.exitsNickName(username.getText())) {
@@ -95,10 +100,10 @@ public class LogInAppController implements Initializable {
                 try {
                     Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/MainScreen.fxml"));
                     Scene InGameScene = new Scene(InGameParent);
-
+                    
                     // Se obtiene la informacion de la ventana (Stage)
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    window.setTitle("Inicio de sesion");
+                    window.setTitle("Lobby");
                     window.setScene(InGameScene);
                     //Ajustar tamaño minimo
                     window.setMinWidth(1280);
@@ -141,12 +146,8 @@ public class LogInAppController implements Initializable {
         
         // Comprobamos si los datos del usuario existen
         if (db.exitsNickName(username.getText())) {
-            // Si existen comprobamos que los datos de log in son correctos
-            Player tryingLogInPlayer = db.getPlayer(username.getText());
-            if (tryingLogInPlayer.getPassword().equals(password.getText())) {
-                // Nombre de usuario y contraseña correcta
-                return tryingLogInPlayer;
-            }
+            // Si existe el usuario cargamos al player
+            return db.loginPlayer(username.getText(), password.getText());
         }
         return null;
     }
