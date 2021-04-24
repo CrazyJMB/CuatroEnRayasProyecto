@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -39,7 +40,7 @@
                   <Insets bottom="25.0" />
                </VBox.margin>
             </Text>
-            <TextField fx:id="username" prefHeight="45.0" promptText="Nombre de usuario" styleClass="username">
+            <TextField fx:id="username" onKeyReleased="#activateLogInButton" prefHeight="45.0" promptText="Nombre de usuario" styleClass="username">
                <VBox.margin>
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </VBox.margin>
@@ -50,7 +51,7 @@
                   <Insets left="15.0" />
                </padding>
             </TextField>
-            <TextField fx:id="password" prefHeight="45.0" promptText="Contraseña" styleClass="password">
+            <PasswordField fx:id="password" onKeyReleased="#activateLogInButton" prefHeight="45.0" promptText="Contraseña" styleClass="password">
                <VBox.margin>
                   <Insets bottom="20.0" left="40.0" right="40.0" />
                </VBox.margin>
@@ -60,7 +61,7 @@
                <padding>
                   <Insets left="15.0" />
                </padding>
-            </TextField>
+            </PasswordField>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <ImageView fx:id="facebookLogIn" fitHeight="35.0" fitWidth="100.0" pickOnBounds="true">
@@ -78,7 +79,7 @@
                      </image></ImageView>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#LogInAction" prefHeight="65.0" prefWidth="65.0" styleClass="logInButton" text="→" textFill="#00000081">
+            <Button fx:id="logInButton" mnemonicParsing="false" onAction="#LogInAction" prefHeight="65.0" prefWidth="65.0" styleClass="logInButton" text="→" textFill="#00000081">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
