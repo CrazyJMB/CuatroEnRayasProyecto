@@ -106,11 +106,9 @@ public class LogInAppController implements Initializable {
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.setTitle("Lobby");
                     window.setScene(InGameScene);
-                    //Ajustar tamaño minimo
-                    window.setMinWidth(1280);
-                    window.setMinHeight(720);
+                   
                     //Ventana reajustable
-                    window.setResizable(true);
+                    window.setResizable(false);
                     window.show();
 
                 } catch (Exception e) {

@@ -28,6 +28,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Connect4;
 import static model.Connect4.getSingletonConnect4;
@@ -42,7 +43,7 @@ public class NewUserScreenController implements Initializable {
     
     private Connect4 db = null;
     
-    Image avatarImage = new Image("/img/avatar1.png", false);
+    public Image avatarImage = new Image("/img/avatars/avatar1.png", false);
             
     @FXML
     private Circle avatarViewCircle;
@@ -78,11 +79,21 @@ public class NewUserScreenController implements Initializable {
         }
         
         // Imagen por defecto en el avatar
-        avatarViewCircle.setFill(new ImagePattern(avatarImage));
+        setAvatar(avatarImage);
     }    
 
     @FXML
     private void changeAvatar(ActionEvent event) {
+        try {    
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/vista/ChangeAvatar.fxml"));
+            
+            stage.setScene(new Scene(root));
+            stage.setTitle("Seleccion de avatar");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            
+        } catch (Exception e) {}
     }
 
     @FXML
@@ -215,5 +226,8 @@ public class NewUserScreenController implements Initializable {
         return true;
     }
 
+    public void setAvatar(Image imagen) {
+        avatarViewCircle.setFill(new ImagePattern(imagen));
+    }
     
 }

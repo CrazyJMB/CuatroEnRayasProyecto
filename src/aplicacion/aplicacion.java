@@ -19,7 +19,7 @@ public class aplicacion extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/InGameScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/LogInApp.fxml"));
         
         Scene scene = new Scene(root);
         
