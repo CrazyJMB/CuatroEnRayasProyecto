@@ -42,7 +42,7 @@ public class NewUserScreenController implements Initializable {
     
     private Connect4 db = null;
     
-    private Image avatarImage = new Image("/img/avatar1.png", false);
+    Image avatarImage = new Image("/img/avatar1.png", false);
             
     @FXML
     private Circle avatarViewCircle;

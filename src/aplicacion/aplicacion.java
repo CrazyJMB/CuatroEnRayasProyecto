@@ -19,7 +19,7 @@ public class aplicacion extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/LogInApp.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/InGameScreen.fxml"));
         
         Scene scene = new Scene(root);
         
@@ -27,7 +27,7 @@ public class aplicacion extends Application {
         scene.getStylesheets().add("/CSS/LogInAppStyleSheet.css");
         
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setTitle("Inicio de sesion");
         stage.show();
     }

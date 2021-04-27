@@ -61,6 +61,7 @@ public class LogInAppController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       
         // Boton de logIn desactivado hasta que haya texto
         logInButton.setDisable(true);
         

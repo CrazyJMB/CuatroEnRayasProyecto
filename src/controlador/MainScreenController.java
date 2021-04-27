@@ -41,6 +41,7 @@ public class MainScreenController implements Initializable {
     // Instacias
     public static Player player;
     public static Player player2;
+    private InGameScreenController controller;
     
     private Connect4 db;
     
@@ -116,6 +117,7 @@ public class MainScreenController implements Initializable {
     private void playVsMachine(ActionEvent event) {
         try {
             Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/InGameScreen.fxml"));
+            
             Scene InGameScene = new Scene(InGameParent);
 
             // Se obtiene la informacion de la ventana (Stage)
