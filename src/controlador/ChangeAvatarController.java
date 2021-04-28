@@ -10,12 +10,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -31,11 +27,13 @@ import javafx.stage.Stage;
  */
 public class ChangeAvatarController extends NewUserScreenController implements Initializable {
 
-    private Image ImageOne = new Image("/img/avatars/default.png", false);
-    private Image ImageTwo = new Image("/img/avatars/avatar1.png", false);
-    private Image ImageTree = new Image("/img/avatars/avatar2.png", false);
-    private Image ImageFour = new Image("/img/avatars/avatar3.png", false);
-    private Image ImageFive = new Image("/img/avatars/avatar4.png", false);
+    private Image imageOne = new Image("/img/avatars/default.png", false);
+    private Image imageTwo = new Image("/img/avatars/avatar1.png", false);
+    private Image imageTree = new Image("/img/avatars/avatar2.png", false);
+    private Image imageFour = new Image("/img/avatars/avatar3.png", false);
+    private Image imageFive = new Image("/img/avatars/avatar4.png", false);
+    
+    private Image selectedImage = null;
     
     @FXML
     private Circle avatarOne;
@@ -69,11 +67,11 @@ public class ChangeAvatarController extends NewUserScreenController implements I
         // TODO
         
         // Cargar las imagenes en los circulos
-        avatarOne.setFill(new ImagePattern(ImageOne));
-        avatarTwo.setFill(new ImagePattern(ImageTwo));
-        avatarThree.setFill(new ImagePattern(ImageTree));
-        avatarFour.setFill(new ImagePattern(ImageFour));
-        avatarFive.setFill(new ImagePattern(ImageFive));
+        avatarOne.setFill(new ImagePattern(imageOne));
+        avatarTwo.setFill(new ImagePattern(imageTwo));
+        avatarThree.setFill(new ImagePattern(imageTree));
+        avatarFour.setFill(new ImagePattern(imageFour));
+        avatarFive.setFill(new ImagePattern(imageFive));
     }    
 
     @FXML
@@ -93,39 +91,50 @@ public class ChangeAvatarController extends NewUserScreenController implements I
         
         // Mostrar la imagen
         if (imgFile != null) {
-            Image image = new Image("file:" + imgFile.getAbsolutePath());
-            avatarImage = image;
+            Image image = new Image(imgFile.getAbsolutePath());
+            selectedImage = image;
         }
         
     }
 
     @FXML
     private void confirmarButton(ActionEvent event) {
-        
-        
         if (radioButtonOne.isSelected()){
-            setAvatar(ImageOne);
+            selectedImage = imageOne;
         } 
         if (radioButtonTwo.isSelected()){
-            avatarImage = ImageTwo;
+            selectedImage = imageTwo;
         } 
         if (radioButtonThree.isSelected()){
-            avatarImage = ImageTree;
+            selectedImage = imageTree;
         } 
         if (radioButtonFour.isSelected()){
-            avatarImage = ImageFour;
+            selectedImage = imageFour;
         } 
         if (radioButtonFour.isSelected()){
-            avatarImage = ImageFive;
+            selectedImage = imageFive;
         }
-    }
-
-    @FXML
-    private void cancelarButton(ActionEvent event) {
         
+        // Cerramos la ventana
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         
         stage.close();
+    }
+
+    @FXML
+    private void cancelarButton(ActionEvent event) {
+        // No seleccionamos avatar
+        selectedAvatar = null;
+        
+        // Cerramos la ventana
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        
+        stage.close();
+    }
+    
+    public Image getSelectedAvatar() {
+        return selectedImage;
     }
 }
