@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ConfirmarCodigoController">
+   <top>
+      <Label text="Introducir el código para recuperar contraseña" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="30.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <TextField fx:id="codigoButton" maxHeight="30.0" maxWidth="350.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="-30.0" />
+         </BorderPane.margin>
+      </TextField>
+   </center>
+   <bottom>
+      <Button fx:id="confirmarButton" mnemonicParsing="false" onAction="#ConfirmarCodigo" text="Confirmar" BorderPane.alignment="CENTER_RIGHT">
+         <BorderPane.margin>
+            <Insets bottom="20.0" right="50.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+</BorderPane>
