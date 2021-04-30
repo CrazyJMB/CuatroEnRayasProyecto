@@ -6,6 +6,7 @@
 package controlador;
 
 import DBAccess.Connect4DAOException;
+import static controlador.LogInAppController.loginPlayer;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -40,7 +41,8 @@ public class MainScreenController implements Initializable {
 
     // Instacias
     public static Player player;
-    public static Player player2;
+    public static Player secondPlayer;
+    
     private InGameScreenController controller;
     
     private Connect4 db;
@@ -71,8 +73,7 @@ public class MainScreenController implements Initializable {
         }
         
         // Cargamos al usuario
-        LogInAppController LogIn = new LogInAppController();
-        player = LogIn.player;
+        player = loginPlayer;
         
         // Cargamos la informacion del usuario en la ventana
         if (player != null) {
@@ -92,7 +93,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void closeSesion(ActionEvent event) {
-        // Ponemos player a null - no es necesario
+        // Ponemos loginPlayer a null - no es necesario
         player = null;
         // Salimos a la ventana de inicio
         try {
@@ -146,12 +147,12 @@ public class MainScreenController implements Initializable {
         
         // Comrpobamos que el usuario existe y no es el que esta logeado
         if (db.exitsNickName(usernameField.getText()) && !player.getNickName().equals(usernameField.getText())) {
-            player2 = db.loginPlayer(usernameField.getText(), passwordField.getText());
+            secondPlayer = db.loginPlayer(usernameField.getText(), passwordField.getText());
         } else {
-            player2 = null;
+            secondPlayer = null;
         }
         
-        if (player2 == null) {
+        if (secondPlayer == null) {
             // Los datos son incorrectos
             if (player.getNickName().equals(usernameField.getText())) {
                 alert.setTitle("Error");

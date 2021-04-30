@@ -7,6 +7,7 @@ package controlador;
 
 import DBAccess.Connect4DAOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -20,10 +21,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Connect4;
 import static model.Connect4.getSingletonConnect4;
@@ -37,7 +40,7 @@ import model.Player;
 public class LogInAppController implements Initializable {
 
     // Player comun en el juego
-    public static Player player;
+    public static Player loginPlayer;
     
     // Base de datos
     private Connect4 db;
@@ -60,7 +63,6 @@ public class LogInAppController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
        
         // Boton de logIn desactivado hasta que haya texto
         logInButton.setDisable(true);
@@ -69,8 +71,11 @@ public class LogInAppController implements Initializable {
         try {
             db = getSingletonConnect4();
         } catch (Connect4DAOException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
+        
+        // Crear usuario CPU, si no existe
+        userCPU();
     }    
 
     @FXML
@@ -81,8 +86,8 @@ public class LogInAppController implements Initializable {
         // Comprobamos que el usuario existe en la base de datos
         if (!"".equals(username.getText()) || !"".equals(password.getText())) {
             // Si han introducido datos
-            player = LogInCheckInfo();
-            if (player == null) {
+            loginPlayer = LogInCheckInfo();
+            if (loginPlayer == null) {
                 // Los datos son incorrectos
                 if (db.exitsNickName(username.getText())) {
                     alert.setTitle("Error en la contraseña");
@@ -121,6 +126,20 @@ public class LogInAppController implements Initializable {
 
     @FXML
     private void rememberPassword(MouseEvent event) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("/vista/RememberPassword.fxml"));
+          
+            
+            stage.setScene(new Scene(root));
+            stage.setTitle("Recuperar datos");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+ 
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la escena");
+        }
     }
 
     @FXML
@@ -145,7 +164,7 @@ public class LogInAppController implements Initializable {
         
         // Comprobamos si los datos del usuario existen
         if (db.exitsNickName(username.getText())) {
-            // Si existe el usuario cargamos al player
+            // Si existe el usuario cargamos al loginPlayer
             return db.loginPlayer(username.getText(), password.getText());
         }
         return null;
@@ -168,6 +187,16 @@ public class LogInAppController implements Initializable {
         if (logInButton.disableProperty().get() == false) {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 LogInAction(new ActionEvent(logInButton, null));
+            }
+        }
+    }
+
+    private void userCPU() {
+        if (!db.exitsNickName("CPU")) {
+            try {
+                db.registerPlayer("CPU", "", "admin", new Image("img/avatars/default.png", false), LocalDate.now(), 0);
+            } catch (Connect4DAOException e) {
+                System.out.println(e);
             }
         }
     }

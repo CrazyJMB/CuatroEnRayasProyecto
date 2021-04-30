@@ -6,7 +6,6 @@
 package controlador;
 
 import DBAccess.Connect4DAOException;
-import com.sun.scenario.effect.impl.Renderer;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;

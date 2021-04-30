@@ -5,7 +5,10 @@
  */
 package controlador;
 
+import DBAccess.Connect4DAOException;
+import implementacion.Matriz;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -14,13 +17,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import model.Player;
+import static controlador.LogInAppController.loginPlayer;
+import static controlador.MainScreenController.secondPlayer;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import model.Connect4;
+import static model.Connect4.getSingletonConnect4;
 
 /**
  * FXML Controller class
@@ -28,83 +47,114 @@ import javafx.scene.shape.Rectangle;
  * @author CrazyJMB
  */
 public class InGameScreenController implements Initializable {
-
+    
     // Instancias
     private final int COLUMNS = 8;
     private final int ROWS = 7;
     
+    private Player playerOne;
+    private Player playerTwo;
+    
+    private boolean turnoPlayer = true;
+    private boolean playingVSmachine = false;
+    
     private Integer currentX;
     private Integer currentY;
     
-    private int[][] circulosColocados = new int[COLUMNS][ROWS];
+    private Matriz circulosPos;
     private boolean[] columnasLlenas = new boolean[COLUMNS];
     
-    private Boolean turno = true; // Turno jugador 1 = true
+    private Alert alert = new Alert(Alert.AlertType.NONE);
     
+    // Base de datos
+    private Connect4 db;
+
+    @FXML
+    private BorderPane borderPane;
     @FXML
     private GridPane gridPane;
     @FXML
-    private BorderPane borderPane;
+    private HBox firstPlayerAviso;
+    @FXML
+    private Circle firstPlayerAvatar;
+    @FXML
+    private Text firstPlayerUsername;
+    @FXML
+    private Text firstPlayerScore;
+    @FXML
+    private HBox secondPlayerAviso;
+    @FXML
+    private Circle secondPlayerAvatar;
+    @FXML
+    private Text secondPlayerUsername;
+    @FXML
+    private Text secondPlayerScore;
+    @FXML
+    private Circle firstPlayerAvisoCircle;
+    @FXML
+    private Circle secondPlayerAvisoCircle;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        // Create grid
+        // Cargamos la base de datos
+        try {
+            db = getSingletonConnect4();
+        } catch (Connect4DAOException e) {
+            System.out.println(e.toString());
+        }
+        
+        // Inicializar
+        circulosPos = new Matriz();
+        
+        // Crear el grid del juego
         makeGrid();
+        
+        // Añadimos la info de los jugadores a la pantalla
+        firstPlayerAvatar.setFill(new ImagePattern(loginPlayer.getAvatar()));
+        firstPlayerUsername.setText(loginPlayer.getNickName());
+        firstPlayerScore.setText("" + loginPlayer.getPoints());
+        
+        if (secondPlayer != null) {
+            // Hay un segundo usuario logeado
+            secondPlayerAvatar.setFill(new ImagePattern(secondPlayer.getAvatar()));
+            secondPlayerUsername.setText(secondPlayer.getNickName());
+            secondPlayerScore.setText("" + secondPlayer.getPoints());
+        } else {
+            // Es la CPU
+            Player CPU = db.getPlayer("CPU");
+            secondPlayerAvatar.setFill(new ImagePattern(CPU.getAvatar()));
+            secondPlayerUsername.setText(CPU.getNickName());
+            secondPlayerScore.setText(" -- ");
+            secondPlayer = CPU;
+            playingVSmachine = true;
+        }
+        
+        // Seleccionar el orden de los jugadores
+        whoIsFirst();
+        
     } 
+
+    @FXML
+    private void setMousePosition(MouseEvent event) {
+        currentX = null;
+        currentY = null;
+    }
+
+    @FXML
+    private void getMousePosition(MouseEvent event) {
+        Node clickedNode = event.getPickResult().getIntersectedNode();
+        if (clickedNode != gridPane) {
+            // click en un nodo (Cirulo)
+            currentX = GridPane.getColumnIndex(clickedNode);
+            currentY = GridPane.getRowIndex(clickedNode);
+        }
+    }
     
     @FXML
-    private void ponerDisc(MouseEvent event) {
-        if (currentX != null) {
-            // Comprobamos si la fila esta vacia o llena
-            int y = ROWS - 1;
-            while (y >= 0 && getArrayAtPos(currentX, y) != 0) {
-                y--;
-            }
-            
-            // Comprobamos si esta llena
-            if (y < 0) {
-                System.out.println("Columna llena");
-                
-            } else {
-                
-                // Conseguimos el circulo de la pos y lo cambiamos de color
-                Circle circle = getCircleByRowColumnIndex(y, currentX, gridPane);
-                circle.setFill(turno ? Color.BLUE:Color.RED);
-                
-                // Actualizamos el array y cambiamos de turno
-                circulosColocados[currentX][y] = turno ? 1:2;
-                turno = !turno;
-                
-                // Actualizamos el contador de columnas llenas
-                if (y == 0) {
-                    columnasLlenas[currentX] = true;
-                }
-            }
-            
-            // Comprobar si alguien (ha ganado en este movimiento)
-            int winner = checkWin();
-            if (winner != -1) {
-                // Hay ganador
-                // Si es 1, es el jugador 1
-                // Si es 2 es el jugador 2
-                System.out.println("Winner: " + winner);
-            }
-        }
-    }
-
-    @FXML
     private void newGameButton(ActionEvent event) {
-        for (int i = 0; i < COLUMNS; i++) {
-            System.out.println(columnasLlenas[i]);
-        }
-    }
-
-    @FXML
-    private void restartGame(ActionEvent event) {
         for (int x = 0; x < COLUMNS; x++) {
             for (int y = 0; y < ROWS; y++) {
                 //gridPane.getChildren().remove(0);
@@ -112,57 +162,145 @@ public class InGameScreenController implements Initializable {
                 circle.setFill(Color.TRANSPARENT);
             }
         }
+        circulosPos = new Matriz();
         
-        // Reiniciamos todos los contadores
         
+        // Actualizar el score
+        updateScore();
     }
-    
-    private int getArrayAtPos(int posX, int posY) {
-        int result = 0;
-        for (int i = 0; i <= posX; i++) {
-            for (int j = 0; j <= posY; j++) {
-                result = circulosColocados[posX][posY];
-            }
-        }
-        return result;
-    }
-    
-    private int checkWin() {
-        
-        // Comprobar horizonalmente
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLUMNS - 3; c++) {
-                if (circulosColocados[r][c] == 1 && circulosColocados[r][c+1] == 1 && circulosColocados[r][c+2] == 1 && circulosColocados[r][c+3] == 1) {
-                    return 1; // Gana el jugador 1
-                }
-                
-                if (circulosColocados[r][c] == 2 && circulosColocados[r][c+1] == 2 && circulosColocados[r][c+2] == 2 && circulosColocados[r][c+3] == 2) {
-                    return 2; // Gana el jugador 2
-                }
-            }
-        }
-        
-        // Comprobar verticalmente
-        for (int c = 0; c < COLUMNS; c++) {
-            for (int r = 0; r < ROWS - 3; r++) {
-                if (circulosColocados[c][r] == 1 && circulosColocados[c][r+1] == 1 && circulosColocados[c][r+2] == 1 && circulosColocados[c][r+3] == 1) {
-                    return 1; // Gana el jugador 1
-                }
-                
-                if (circulosColocados[c][r] == 2 && circulosColocados[c][r+1] == 2 && circulosColocados[c][r+2] == 2 && circulosColocados[c][r+3] == 2) {
-                    return 2; // Gana el jugador 2
-                }
-            }
-        }
-        
-        // Comprobar diagonalmente
-        for (int i = 0; i < COLUMNS; i++) {
-            for (int j = 0; j < 10; j++) {
-                
-            }
-        }
 
-        return -1;
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        // Desconectamos al segundo usuario
+        secondPlayer = null;
+
+        // Salimos del modo multijugador
+        try {
+            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/vista/MainScreen.fxml"));
+
+            Scene mainMenuScene = new Scene(mainMenuParent);
+
+            // Se obtiene la informacion de la ventana (Stage)
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Menu principal");
+            window.setScene(mainMenuScene);
+            //Ventana reajustable
+            window.setResizable(false);
+            window.show();
+
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la escena");
+        }
+    }
+    
+    @FXML
+    private void onClickGridPane(MouseEvent event) {
+        // Verificar turno
+        if (playingVSmachine) {
+            if (playerOne.getNickName().equals("CPU") && turnoPlayer) {
+                // La maquina empieza
+                Random rnd = new Random();
+                currentX = rnd.nextInt(8);
+            } else if (playerTwo.getNickName().equals("CPU") && !turnoPlayer) {
+                // La maquina empieza
+                Random rnd = new Random();
+                currentX = rnd.nextInt(8);
+            }
+        }
+        
+        // Si hemos selecionado una casilla
+        if (currentX != null) {
+            // Comprobamos si la columna esta vacia o llena
+            if (!circulosPos.isColumnFill(currentX)) {
+                // Columna vacia, conseguimos la pos
+                currentY = circulosPos.posNextInColumn(currentX);
+                
+                // Conseguimos el circulo de la pos y lo cambiamos de color
+                Circle circle = getCircleByRowColumnIndex(currentY, currentX, gridPane);
+                circle.setFill(turnoPlayer ? Color.BLUE:Color.RED);
+                
+                // Actualizamos la matriz y cambiamos de turno
+                circulosPos.setPlayerOnPos(currentX, currentY, turnoPlayer ? playerOne:playerTwo);
+                turnoPlayer = !turnoPlayer;
+                
+                // Cambiamos la etiqueta de aviso del jugador que le toca
+                if (firstPlayerAviso.isVisible()) {
+                    firstPlayerAviso.setVisible(false);
+                    secondPlayerAviso.setVisible(true);
+                } else {
+                    firstPlayerAviso.setVisible(true);
+                    secondPlayerAviso.setVisible(false);
+                }
+
+                // Actualizamos el contador de columnas llenas
+                columnasLlenas[currentX] = circulosPos.isColumnFill(currentX);
+            } else {
+                System.out.println("Columna llena");
+            }
+            
+            // Comprobamos si alguien ha ganado en este turno
+            if (circulosPos.isWin(currentX, currentY) != null) {
+                circulosPos.showContent();
+                // Creacion de la partida con ganador y perdedor
+                setGameWinner();
+                
+                // Aviso al usuario del ganador
+                ButtonType buttonTypeSi = new ButtonType("Si");
+                ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
+                alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
+                alert.setAlertType(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Ganador");
+                alert.setHeaderText("El ganador de esta partida es: " + circulosPos.isWin(currentX, currentY).getNickName());
+                alert.setContentText("¿Quieres volver a jugar?");
+                
+                // Opcion seleccionada por el usuario
+                Optional<ButtonType> respuesta = alert.showAndWait();
+                if (respuesta.get() == buttonTypeSi) {
+                    // Vaciamos el tablero
+                    newGameButton(null);
+                    // Volvemos a selecionar quien empieza
+                    whoIsFirst();
+                    wait(100);
+                } else {
+                    cerrarSesion(null);
+                }
+            }
+            if (playingVSmachine) {
+                if (playerOne.getNickName().equals("CPU") && turnoPlayer) {
+                    onClickGridPane(null);
+                } else if (playerTwo.getNickName().equals("CPU") && !turnoPlayer) {
+                    onClickGridPane(null);
+                }
+            }               
+        }
+    }
+    
+    @FXML
+    private void startGameMachine(MouseEvent event) {
+        onClickGridPane(event);
+    }
+    
+    // Metodos auxiliares de la clase
+    private void whoIsFirst() {
+        Random rnd = new Random();
+        int random = rnd.nextInt(2);
+        if (random == 0) {
+            playerOne = loginPlayer;
+            playerTwo = secondPlayer;
+            
+            // Activamos la etiqueta del primer jugador
+            firstPlayerAviso.setVisible(true);
+            firstPlayerAvisoCircle.setFill(Color.BLUE);
+            secondPlayerAvisoCircle.setFill(Color.RED);
+        } else {
+            playerOne = secondPlayer;
+            playerTwo = loginPlayer;
+            
+            // Activamos la etiqueta del primer jugador
+            secondPlayerAviso.setVisible(true);
+            firstPlayerAvisoCircle.setFill(Color.RED);
+            secondPlayerAvisoCircle.setFill(Color.BLUE);
+        }
     }
     
     private void makeGrid() {
@@ -181,43 +319,10 @@ public class InGameScreenController implements Initializable {
                 
                 gridPane.add(circle, x, y);
                 GridPane.setHalignment(circle, HPos.CENTER);
-                
             }
         }
     }
     
-    private void makeColumnsOverlay() {
-                
-        // Creacion del rectangulo
-        Rectangle rect = new Rectangle();
-        rect.heightProperty().bind(Bindings.divide(gridPane.heightProperty(), 1));
-        rect.widthProperty().bind(Bindings.divide(gridPane.widthProperty(), 16));
-        
-        for (int x = 0; x < COLUMNS; x++) {
-            rect.translateXProperty().bind(Bindings.divide(gridPane.widthProperty(), (16-2*x)));
-            borderPane.setCenter(rect);
-        }
-        
-        rect.setOnMouseEntered(event -> rect.setFill(Color.valueOf("#eeeeee66")));
-        rect.setOnMouseExited(event -> rect.setFill(Color.TRANSPARENT));
-    }
-    
-    @FXML
-    public void getMousePosition(MouseEvent event) {
-        Node clickedNode = event.getPickResult().getIntersectedNode();
-        if (clickedNode != gridPane) {
-            // click on descendant node
-            currentX = GridPane.getColumnIndex(clickedNode);
-            currentY = GridPane.getRowIndex(clickedNode);
-        }
-    }
-    
-    @FXML
-    private void setMousePosition(MouseEvent event) {
-        currentX = null;
-        currentY = null;
-    }
-
     public Node getNodeByRowColumnIndex(final int row,final int column,GridPane gridPane) {
         Node result = null;
         ObservableList<Node> childrens = gridPane.getChildren();
@@ -241,5 +346,46 @@ public class InGameScreenController implements Initializable {
         }
         return result;
     }
+
+    private void setGameWinner() {
+        try {
+            if (playingVSmachine) {
+                // Jugando contra la maquina
+                if (circulosPos.isWin(currentX, currentY) == playerOne) {
+                    db.regiterRound(LocalDateTime.now(), playerOne, playerTwo);
+                    playerOne.plusPoints(db.getPointsAlone());
+                } else {
+                    db.regiterRound(LocalDateTime.now(), playerTwo, playerOne);
+                    playerTwo.plusPoints(db.getPointsAlone());
+                }
+            } else {
+                // Jugando contra otro jugador
+                if (circulosPos.isWin(currentX, currentY) == playerOne) {
+                    db.regiterRound(LocalDateTime.now(), playerOne, playerTwo);
+                    playerOne.plusPoints(db.getPointsRound());
+                } else {
+                    db.regiterRound(LocalDateTime.now(), playerTwo, playerOne);
+                    playerTwo.plusPoints(db.getPointsRound());
+                }
+            }
+        } catch (Connect4DAOException e) {
+            System.out.println(e);
+        }
+            
+        
+    }
     
+    private static void wait(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void updateScore() {
+        firstPlayerScore.setText("" + loginPlayer.getPoints());
+        secondPlayerScore.setText("" + secondPlayer.getPoints());
+    }
+
 }

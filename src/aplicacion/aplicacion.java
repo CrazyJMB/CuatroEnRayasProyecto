@@ -27,7 +27,7 @@ public class aplicacion extends Application {
         scene.getStylesheets().add("/CSS/LogInAppStyleSheet.css");
         
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.setTitle("Inicio de sesion");
         stage.show();
     }
