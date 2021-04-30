@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -30,6 +31,8 @@ public class ConfirmarCodigoController extends GeneradorCodigoController impleme
     private Button confirmarButton;
     @FXML
     private TextField codigoButton;
+    @FXML
+    private Label passwordExit;
 
     /**
      * Initializes the controller class.
@@ -37,6 +40,7 @@ public class ConfirmarCodigoController extends GeneradorCodigoController impleme
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       
         }
         
 
@@ -44,14 +48,9 @@ public class ConfirmarCodigoController extends GeneradorCodigoController impleme
     private void ConfirmarCodigo(ActionEvent event) {
         //Cogemos la variable codigo del GeneradorCodigoCOntroller
         if (codigo == Integer.parseInt(codigoButton.getText())){
-            //Que salga un cuadro de dialogo con la password
-            String pass = player.getPassword();
-            System.out.println("" + pass);
             
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Contraseña:" + pass);
-            alert.setContentText("Le transladamos a la ventana de inicio de sesion");
-            alert.showAndWait();
+            String pass = player.getPassword();
+            passwordExit.setText("La contraseña es: " + pass);
             volverInicio(event);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);

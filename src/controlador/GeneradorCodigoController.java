@@ -25,43 +25,24 @@ import javafx.stage.Stage;
  * @author supee
  */
 public class GeneradorCodigoController extends rememberPass implements Initializable {
-
+    
+    Random rand = new Random();
+    int codigo = rand.nextInt(999999);
+    
     @FXML
     private TextField GeneradorCodigo;
 
     /**
      * Initializes the controller class.
      */
-    
-    Random rand = new Random();
-    public int codigo = rand.nextInt(999999);
-    
-   
-    
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
         GeneradorCodigo.setText("" + codigo);
         
     }    
-
-    private void continuarAconfimar(MouseEvent event) {
-       try {
-            Parent LogInAppParent = FXMLLoader.load(getClass().getResource("/vista/ConfirmarCodigo.fxml"));
-            Scene LogInAppScene = new Scene(LogInAppParent);
-            
-            // Se obtiene la informacion de la ventana (Stage)
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Inicio de sesion");
-            window.setScene(LogInAppScene);
-            window.setResizable(false);
-            window.show();
-            
-        } catch (Exception e) {
-            System.out.println("No se pudo cargar la escena");
-        }
-
-   }
 
     @FXML
     private void continuarAconfimar(ActionEvent event) {

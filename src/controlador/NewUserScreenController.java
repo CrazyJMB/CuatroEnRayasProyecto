@@ -212,7 +212,7 @@ public class NewUserScreenController implements Initializable {
         }
     }
     
-    private void volverInicioDeUsuario(ActionEvent event) {
+    public void volverInicioDeUsuario(ActionEvent event) {
         try {
             Parent LogInAppParent = FXMLLoader.load(getClass().getResource("/vista/LogInApp.fxml"));
             Scene LogInAppScene = new Scene(LogInAppParent);

@@ -24,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Connect4;
 import static model.Connect4.getSingletonConnect4;
@@ -121,6 +122,20 @@ public class LogInAppController implements Initializable {
 
     @FXML
     private void rememberPassword(MouseEvent event) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("/vista/rememberPass.fxml"));
+          
+            
+            stage.setScene(new Scene(root));
+            stage.setTitle("Seleccion de avatar");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+ 
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la escena");
+        }
     }
 
     @FXML
