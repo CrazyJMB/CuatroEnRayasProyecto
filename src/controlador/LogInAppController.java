@@ -57,6 +57,8 @@ public class LogInAppController implements Initializable {
     private TextField password;
     @FXML
     private Button logInButton;
+    @FXML
+    private ImageView logo;
 
     /**
      * Initializes the controller class.
@@ -76,6 +78,8 @@ public class LogInAppController implements Initializable {
         
         // Crear usuario CPU, si no existe
         userCPU();
+        
+        logo.setImage(new Image("/img/Logo.png", false));
     }    
 
     @FXML

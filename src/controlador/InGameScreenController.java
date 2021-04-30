@@ -53,7 +53,9 @@ public class InGameScreenController implements Initializable {
     private final int ROWS = 7;
     
     private Player playerOne;
+    private final Color playerOneColor = Color.BLUE;
     private Player playerTwo;
+    private final Color playerTwoColor = Color.RED;
     
     private boolean turnoPlayer = true;
     private boolean playingVSmachine = false;
@@ -164,6 +166,8 @@ public class InGameScreenController implements Initializable {
         }
         circulosPos = new Matriz();
         
+        // Selecionamos orden
+        whoIsFirst();
         
         // Actualizar el score
         updateScore();
@@ -172,18 +176,18 @@ public class InGameScreenController implements Initializable {
     @FXML
     private void cerrarSesion(ActionEvent event) {
         // Desconectamos al segundo usuario
-        secondPlayer = null;
-
-        // Salimos del modo multijugador
+        if (secondPlayer.getNickName().equals("CPU")) {
+            secondPlayer = null;
+        }
         try {
-            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/vista/MainScreen.fxml"));
-
-            Scene mainMenuScene = new Scene(mainMenuParent);
+            Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/MainScreen.fxml"));
+            Scene InGameScene = new Scene(InGameParent);
 
             // Se obtiene la informacion de la ventana (Stage)
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Menu principal");
-            window.setScene(mainMenuScene);
+            Stage window = (Stage) gridPane.getScene().getWindow();
+            window.setTitle("Lobby");
+            window.setScene(InGameScene);
+
             //Ventana reajustable
             window.setResizable(false);
             window.show();
@@ -195,7 +199,7 @@ public class InGameScreenController implements Initializable {
     
     @FXML
     private void onClickGridPane(MouseEvent event) {
-        // Verificar turno
+        // Verificar si es turno de la maquina
         if (playingVSmachine) {
             if (playerOne.getNickName().equals("CPU") && turnoPlayer) {
                 // La maquina empieza
@@ -212,25 +216,28 @@ public class InGameScreenController implements Initializable {
         if (currentX != null) {
             // Comprobamos si la columna esta vacia o llena
             if (!circulosPos.isColumnFill(currentX)) {
-                // Columna vacia, conseguimos la pos
+                // Pos del prox circulo en la columna
                 currentY = circulosPos.posNextInColumn(currentX);
                 
                 // Conseguimos el circulo de la pos y lo cambiamos de color
                 Circle circle = getCircleByRowColumnIndex(currentY, currentX, gridPane);
-                circle.setFill(turnoPlayer ? Color.BLUE:Color.RED);
+                circle.setFill(turnoPlayer ? playerOneColor:playerTwoColor);
                 
                 // Actualizamos la matriz y cambiamos de turno
                 circulosPos.setPlayerOnPos(currentX, currentY, turnoPlayer ? playerOne:playerTwo);
-                turnoPlayer = !turnoPlayer;
-                
+                                
                 // Cambiamos la etiqueta de aviso del jugador que le toca
-                if (firstPlayerAviso.isVisible()) {
-                    firstPlayerAviso.setVisible(false);
-                    secondPlayerAviso.setVisible(true);
-                } else {
+                if (turnoPlayer) {
+                    // Turno playerOne
                     firstPlayerAviso.setVisible(true);
                     secondPlayerAviso.setVisible(false);
+                } else {
+                    firstPlayerAviso.setVisible(false);
+                    secondPlayerAviso.setVisible(true);
                 }
+                
+                // Cambiamos de turno 
+                turnoPlayer = !turnoPlayer;
 
                 // Actualizamos el contador de columnas llenas
                 columnasLlenas[currentX] = circulosPos.isColumnFill(currentX);
@@ -256,22 +263,36 @@ public class InGameScreenController implements Initializable {
                 // Opcion seleccionada por el usuario
                 Optional<ButtonType> respuesta = alert.showAndWait();
                 if (respuesta.get() == buttonTypeSi) {
-                    // Vaciamos el tablero
-                    newGameButton(null);
-                    // Volvemos a selecionar quien empieza
-                    whoIsFirst();
-                    wait(100);
+                    secondPlayer = null;
+                    // Salimos del modo multijugador
+                    try {
+                        Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/InGameScreen.fxml"));
+                        Scene InGameScene = new Scene(InGameParent);
+
+                        // Se obtiene la informacion de la ventana (Stage)
+                        Stage windowTest = (Stage) gridPane.getScene().getWindow();
+                        windowTest.setTitle("Partida");
+                        windowTest.setScene(InGameScene);
+
+                        //Ventana reajustable
+                        windowTest.setResizable(false);
+                        windowTest.show();
+
+                    } catch (Exception e) {
+                        System.out.println("No se pudo cargar la escena");
+                    }
                 } else {
                     cerrarSesion(null);
                 }
+            }              
+        }
+        
+        if (playingVSmachine) {
+            if (playerOne.getNickName().equals("CPU") && turnoPlayer) {
+                onClickGridPane(event);
+            } else if (playerTwo.getNickName().equals("CPU") && !turnoPlayer) {
+                onClickGridPane(event);
             }
-            if (playingVSmachine) {
-                if (playerOne.getNickName().equals("CPU") && turnoPlayer) {
-                    onClickGridPane(null);
-                } else if (playerTwo.getNickName().equals("CPU") && !turnoPlayer) {
-                    onClickGridPane(null);
-                }
-            }               
         }
     }
     
@@ -285,21 +306,22 @@ public class InGameScreenController implements Initializable {
         Random rnd = new Random();
         int random = rnd.nextInt(2);
         if (random == 0) {
-            playerOne = loginPlayer;
+            playerOne = loginPlayer; // Usuario principal
             playerTwo = secondPlayer;
             
             // Activamos la etiqueta del primer jugador
             firstPlayerAviso.setVisible(true);
-            firstPlayerAvisoCircle.setFill(Color.BLUE);
-            secondPlayerAvisoCircle.setFill(Color.RED);
+            firstPlayerAvisoCircle.setFill(playerOneColor);
+            secondPlayerAvisoCircle.setFill(playerTwoColor);
+            
         } else {
-            playerOne = secondPlayer;
+            playerOne = secondPlayer; // CPU o segundo player
             playerTwo = loginPlayer;
             
             // Activamos la etiqueta del primer jugador
             secondPlayerAviso.setVisible(true);
-            firstPlayerAvisoCircle.setFill(Color.RED);
-            secondPlayerAvisoCircle.setFill(Color.BLUE);
+            firstPlayerAvisoCircle.setFill(playerTwoColor);
+            secondPlayerAvisoCircle.setFill(playerOneColor);
         }
     }
     
@@ -370,16 +392,6 @@ public class InGameScreenController implements Initializable {
             }
         } catch (Connect4DAOException e) {
             System.out.println(e);
-        }
-            
-        
-    }
-    
-    private static void wait(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
         }
     }
 
