@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -28,6 +29,7 @@ public class aplicacion extends Application {
         
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("/img/Logo16x16.png", false));
         stage.setTitle("Inicio de sesion");
         stage.show();
     }
