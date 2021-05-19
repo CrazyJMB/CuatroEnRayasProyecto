@@ -48,12 +48,6 @@ public class LogInAppController implements Initializable {
     @FXML
     private TextField username;
     @FXML
-    private ImageView facebookLogIn;
-    @FXML
-    private ImageView googleLogIn;
-    @FXML
-    private ImageView appleLogIn;
-    @FXML
     private TextField password;
     @FXML
     private Button logInButton;
@@ -111,6 +105,7 @@ public class LogInAppController implements Initializable {
                     Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/MainScreen.fxml"));
                     Scene InGameScene = new Scene(InGameParent);
                     
+                    InGameScene.getStylesheets().add("/visualizacion/MainScreenStyleSheet.css");
                     // Se obtiene la informacion de la ventana (Stage)
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.setTitle("Lobby");
@@ -132,11 +127,13 @@ public class LogInAppController implements Initializable {
     private void rememberPassword(MouseEvent event) {
         try {
             Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            Parent root = loader.load(getClass().getResource("/vista/RememberPassword.fxml"));
-          
+            Parent confirmarCodigoParent = FXMLLoader.load(getClass().getResource("/vista/RememberPassword.fxml"));
+            Scene confirmarCodigoScene = new Scene(confirmarCodigoParent);
+
+            confirmarCodigoScene.getStylesheets().add("/visualizacion/ConfirmarCodigoStyleSheet.css");
             
-            stage.setScene(new Scene(root));
+            stage.setScene(confirmarCodigoScene);
+            stage.setResizable(false);
             stage.setTitle("Recuperar datos");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -151,6 +148,8 @@ public class LogInAppController implements Initializable {
         try {
             Parent newUserParent = FXMLLoader.load(getClass().getResource("/vista/NewUserScreen.fxml"));
             Scene newUserScene = new Scene(newUserParent);
+            
+            newUserScene.getStylesheets().add("/visualizacion/newUserScreenStyleSheet.css");
             
             // Se obtiene la informacion de la ventana (Stage)
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -203,6 +202,18 @@ public class LogInAppController implements Initializable {
                 System.out.println(e);
             }
         }
+    }
+
+    @FXML
+    private void facebookLogIn(MouseEvent event) {
+    }
+
+    @FXML
+    private void googleLogIn(MouseEvent event) {
+    }
+
+    @FXML
+    private void appleLogIn(MouseEvent event) {
     }
     
 }

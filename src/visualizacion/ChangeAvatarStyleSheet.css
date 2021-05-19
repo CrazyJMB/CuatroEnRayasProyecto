@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 13, 2021, 3:56:26 PM
+    Author     : CrazyJMB
+*/
+
+Button {
+    -fx-background-color: none;
+    -fx-border-radius: 20;
+    -fx-border-color: #00000081;
+}
+
+.buscarImagen:hover {
+    -fx-background-radius: 20;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.confirmarButton:hover {
+    -fx-background-radius: 20;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.cancelarButton:hover {
+    -fx-background-radius: 20;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}

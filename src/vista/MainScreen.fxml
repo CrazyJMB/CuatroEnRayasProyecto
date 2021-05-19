@@ -50,7 +50,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" onAction="#editProfileButton" prefHeight="32.0" prefWidth="120.0" style="-fx-background-color: LightGray; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #00000081;" text="Editar perfil">
+                  <Button mnemonicParsing="false" onAction="#editProfileButton" prefHeight="32.0" prefWidth="120.0" styleClass="editarPerfil" text="Editar perfil">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -63,9 +63,14 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
+            <Button layoutX="430.0" layoutY="39.0" mnemonicParsing="false" styleClass="historialDePartida" text="Historial de partidas">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
-      <Button mnemonicParsing="false" onAction="#closeSesion" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: LightGray; -fx-background-radius: 20; -fx-border-color: red; -fx-border-radius: 20;" text="Cerrar sesion" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0">
+      <Button mnemonicParsing="false" onAction="#closeSesion" prefHeight="45.0" prefWidth="120.0" styleClass="cerrarSesion" text="Cerrar sesion" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -82,7 +87,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#playVsMachine" style="-fx-background-color: none; -fx-border-radius: 20; -fx-border-color: #00000081;" text="Jugar contra la maquina">
+            <Button mnemonicParsing="false" onAction="#playVsMachine" text="Jugar contra la maquina">
                <font>
                   <Font size="24.0" />
                </font>
@@ -90,7 +95,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#seeRanking" style="-fx-background-color: none; -fx-border-radius: 20; -fx-border-color: #00000081;" text="Ver ranking">
+            <Button mnemonicParsing="false" onAction="#seeRanking" text="Ver ranking">
                <font>
                   <Font size="24.0" />
                </font>
@@ -112,7 +117,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" onKeyReleased="#activatePlayButton" prefHeight="45.0" promptText="Nombre de usuario" style="-fx-background-color: gainsboro;">
+            <TextField fx:id="usernameField" onKeyReleased="#activatePlayButton" prefHeight="45.0" promptText="Nombre de usuario">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" top="20.0" />
                </VBox.margin>
@@ -123,7 +128,7 @@
                   <Insets left="15.0" />
                </padding>
             </TextField>
-            <PasswordField fx:id="passwordField" onKeyReleased="#activatePlayButton" prefHeight="45.0" promptText="Contraseña" style="-fx-background-color: gainsboro;">
+            <PasswordField fx:id="passwordField" onKeyReleased="#activatePlayButton" prefHeight="45.0" promptText="Contraseña">
                <VBox.margin>
                   <Insets bottom="10.0" left="100.0" right="100.0" />
                </VBox.margin>
@@ -134,12 +139,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </PasswordField>
-            <Label text="Crear nueva cuenta" underline="true">
+            <Label onMouseClicked="#multiplayerCreateNewAccount" styleClass="createNewAccount" text="Crear nueva cuenta">
                <VBox.margin>
                   <Insets right="170.0" top="-10.0" />
                </VBox.margin>
             </Label>
-            <Button fx:id="multiplayerPlayButton" disable="true" mnemonicParsing="false" onAction="#multiplayerPlay" style="-fx-background-color: none; -fx-border-radius: 20; -fx-border-color: #00000081;" text=" Jugar ">
+            <Button fx:id="multiplayerPlayButton" disable="true" mnemonicParsing="false" onAction="#multiplayerPlay" text=" Jugar ">
                <font>
                   <Font size="18.0" />
                </font>

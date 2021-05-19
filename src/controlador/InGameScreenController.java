@@ -201,12 +201,13 @@ public class InGameScreenController implements Initializable {
     private void onClickGridPane(MouseEvent event) {
         // Verificar si es turno de la maquina
         if (playingVSmachine) {
-            if (playerOne.getNickName().equals("CPU") && turnoPlayer) {
+            if (playerOne.getNickName().equals("CPU") && turnoPlayer == true) {
                 // La maquina empieza
                 Random rnd = new Random();
                 currentX = rnd.nextInt(8);
-            } else if (playerTwo.getNickName().equals("CPU") && !turnoPlayer) {
-                // La maquina empieza
+            }
+            if (playerTwo.getNickName().equals("CPU") && turnoPlayer == false) {
+                // Le toca a la CPU
                 Random rnd = new Random();
                 currentX = rnd.nextInt(8);
             }
@@ -225,16 +226,10 @@ public class InGameScreenController implements Initializable {
                 
                 // Actualizamos la matriz y cambiamos de turno
                 circulosPos.setPlayerOnPos(currentX, currentY, turnoPlayer ? playerOne:playerTwo);
-                                
+                
                 // Cambiamos la etiqueta de aviso del jugador que le toca
-                if (turnoPlayer) {
-                    // Turno playerOne
-                    firstPlayerAviso.setVisible(true);
-                    secondPlayerAviso.setVisible(false);
-                } else {
-                    firstPlayerAviso.setVisible(false);
-                    secondPlayerAviso.setVisible(true);
-                }
+                firstPlayerAviso.setVisible(!firstPlayerAviso.visibleProperty().getValue());
+                secondPlayerAviso.setVisible(!secondPlayerAviso.visibleProperty().getValue());
                 
                 // Cambiamos de turno 
                 turnoPlayer = !turnoPlayer;
@@ -245,8 +240,8 @@ public class InGameScreenController implements Initializable {
                 System.out.println("Columna llena");
             }
             
-            // Comprobamos si alguien ha ganado en este turno
-            if (circulosPos.isWin(currentX, currentY) != null) {
+            // Comprobamos si alguien ha ganado en este turno o si todas las columnas estan llenas
+            if (circulosPos.isWin(currentX, currentY) != null ) {
                 circulosPos.showContent();
                 // Creacion de la partida con ganador y perdedor
                 setGameWinner();
@@ -288,9 +283,9 @@ public class InGameScreenController implements Initializable {
         }
         
         if (playingVSmachine) {
-            if (playerOne.getNickName().equals("CPU") && turnoPlayer) {
+            if (playerOne.getNickName().equals("CPU") && turnoPlayer == true) {
                 onClickGridPane(event);
-            } else if (playerTwo.getNickName().equals("CPU") && !turnoPlayer) {
+            } else if (playerTwo.getNickName().equals("CPU") && turnoPlayer == false) {
                 onClickGridPane(event);
             }
         }
@@ -320,8 +315,8 @@ public class InGameScreenController implements Initializable {
             
             // Activamos la etiqueta del primer jugador
             secondPlayerAviso.setVisible(true);
-            firstPlayerAvisoCircle.setFill(playerTwoColor);
             secondPlayerAvisoCircle.setFill(playerOneColor);
+            firstPlayerAvisoCircle.setFill(playerTwoColor);
         }
     }
     
@@ -399,5 +394,4 @@ public class InGameScreenController implements Initializable {
         firstPlayerScore.setText("" + loginPlayer.getPoints());
         secondPlayerScore.setText("" + secondPlayer.getPoints());
     }
-
 }

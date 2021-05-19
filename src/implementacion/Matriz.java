@@ -37,6 +37,20 @@ public class Matriz {
         }
         return true;
     }
+    
+    public boolean isAllColumnsFill() {
+        int nColumnFills = 0;
+        for (int i = 0; i < COLUMNS; i++) {
+            if (isColumnFill(i)) {
+                nColumnFills++;
+            }
+        }
+        
+        if (nColumnFills == COLUMNS) {
+            return true;
+        }
+        return false;
+    }
 
     // PRECONDICION: Comprobar que la columna no esta llena
     public int posNextInColumn(int x) {

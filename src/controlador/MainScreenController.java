@@ -89,6 +89,21 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void editProfileButton(ActionEvent event) {
+        try {
+            Parent ModifyUserDataParent = FXMLLoader.load(getClass().getResource("/vista/ModifyUserData.fxml"));
+            Scene ModifyUserDataScene = new Scene(ModifyUserDataParent);
+
+            // Se obtiene la informacion de la ventana (Stage)
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Modificación de usuario");
+            window.setScene(ModifyUserDataScene);
+            //Ventana reajustable
+            window.setResizable(false);
+            window.show();
+
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la escena");
+        }
     }
 
     @FXML

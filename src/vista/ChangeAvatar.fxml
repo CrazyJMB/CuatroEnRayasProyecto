@@ -38,7 +38,7 @@
           <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <RadioButton fx:id="radioButtonOne" mnemonicParsing="false" text="      " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <RadioButton fx:id="radioButtonOne" mnemonicParsing="false" onMouseClicked="#confirmarButtonHandler" text="      " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <graphic>
                   <Circle fx:id="avatarOne" fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
                </graphic>
@@ -46,37 +46,37 @@
                   <ToggleGroup fx:id="selectedAvatar" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="radioButtonTwo" mnemonicParsing="false" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <RadioButton fx:id="radioButtonTwo" mnemonicParsing="false" onMouseClicked="#confirmarButtonHandler" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <graphic>
                   <Circle fx:id="avatarTwo" fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
                </graphic>
             </RadioButton>
-            <RadioButton fx:id="radioButtonThree" mnemonicParsing="false" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <RadioButton fx:id="radioButtonThree" mnemonicParsing="false" onMouseClicked="#confirmarButtonHandler" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <graphic>
                   <Circle fx:id="avatarThree" fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
                </graphic>
             </RadioButton>
-            <RadioButton fx:id="radioButtonFour" mnemonicParsing="false" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <RadioButton fx:id="radioButtonFour" mnemonicParsing="false" onMouseClicked="#confirmarButtonHandler" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <graphic>
                   <Circle fx:id="avatarFour" fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
                </graphic>
             </RadioButton>
-            <RadioButton fx:id="radioButtonFive" mnemonicParsing="false" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <RadioButton fx:id="radioButtonFive" mnemonicParsing="false" onMouseClicked="#confirmarButtonHandler" text="      " toggleGroup="$selectedAvatar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <graphic>
                   <Circle fx:id="avatarFive" fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
                </graphic>
             </RadioButton>
-            <Button mnemonicParsing="false" onAction="#searchIMG" text="Buscar imagen en el dispositivo" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#searchIMG" styleClass="buscarImagen" text="Buscar imagen en el dispositivo" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#confirmarButton" text="Confirmar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <Button fx:id="confirmar" mnemonicParsing="false" onAction="#confirmarButton" styleClass="confirmarButton" text="Confirmar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#cancelarButton" text="Cancelar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Button mnemonicParsing="false" onAction="#cancelarButton" styleClass="cancelarButton" text="Cancelar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font size="14.0" />
                </font>

@@ -8,13 +8,18 @@ package controlador;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import static javafx.beans.binding.Bindings.not;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -27,13 +32,13 @@ import javafx.stage.Stage;
  */
 public class ChangeAvatarController extends NewUserScreenController implements Initializable {
 
-    private Image imageOne = new Image("/img/avatars/default.png", false);
-    private Image imageTwo = new Image("/img/avatars/avatar1.png", false);
-    private Image imageTree = new Image("/img/avatars/avatar2.png", false);
-    private Image imageFour = new Image("/img/avatars/avatar3.png", false);
-    private Image imageFive = new Image("/img/avatars/avatar4.png", false);
+    private final Image imageOne = new Image("/img/avatars/default.png", false);
+    private final Image imageTwo = new Image("/img/avatars/avatar1.png", false);
+    private final Image imageTree = new Image("/img/avatars/avatar2.png", false);
+    private final Image imageFour = new Image("/img/avatars/avatar3.png", false);
+    private final Image imageFive = new Image("/img/avatars/avatar4.png", false);
     
-    private Image selectedImage = null;
+    public static Image selectedImage = null;
     
     @FXML
     private Circle avatarOne;
@@ -57,6 +62,8 @@ public class ChangeAvatarController extends NewUserScreenController implements I
     private RadioButton radioButtonFour;
     @FXML
     private RadioButton radioButtonFive;
+    @FXML
+    private Button confirmar;
     
     
     /**
@@ -65,6 +72,7 @@ public class ChangeAvatarController extends NewUserScreenController implements I
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        confirmar.setDisable(true);
         
         // Cargar las imagenes en los circulos
         avatarOne.setFill(new ImagePattern(imageOne));
@@ -91,10 +99,14 @@ public class ChangeAvatarController extends NewUserScreenController implements I
         
         // Mostrar la imagen
         if (imgFile != null) {
-            Image image = new Image(imgFile.getAbsolutePath());
-            selectedImage = image;
+            selectedImage = new Image("file:" + imgFile.getAbsolutePath(), false);
+            
+            // Cerramos la ventana
+            Node source = (Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+
+            stage.close();
         }
-        
     }
 
     @FXML
@@ -111,7 +123,7 @@ public class ChangeAvatarController extends NewUserScreenController implements I
         if (radioButtonFour.isSelected()){
             selectedImage = imageFour;
         } 
-        if (radioButtonFour.isSelected()){
+        if (radioButtonFive.isSelected()){
             selectedImage = imageFive;
         }
         
@@ -133,8 +145,30 @@ public class ChangeAvatarController extends NewUserScreenController implements I
         
         stage.close();
     }
-    
-    public Image getSelectedAvatar() {
-        return selectedImage;
+
+    @FXML
+    private void confirmarButtonHandler(MouseEvent event) {
+         //Manejar boton de createNewUser
+        BooleanBinding firstAvatar = Bindings.createBooleanBinding(() -> {
+            return !radioButtonOne.isFocused();
+        }, radioButtonOne.focusedProperty());
+        
+        BooleanBinding secondAvatar = Bindings.createBooleanBinding(() -> {
+            return !radioButtonTwo.isFocused();
+        }, radioButtonTwo.focusedProperty());
+        
+        BooleanBinding ThirdAvatar = Bindings.createBooleanBinding(() -> {
+            return !radioButtonThree.isFocused();
+        }, radioButtonThree.focusedProperty());
+        
+        BooleanBinding FourAvatar = Bindings.createBooleanBinding(() -> {
+            return !radioButtonFour.isFocused();
+        }, radioButtonFour.focusedProperty());
+        
+        BooleanBinding FiveAvatar = Bindings.createBooleanBinding(() -> {
+            return !radioButtonFive.isFocused();
+        }, radioButtonFive.focusedProperty());
+        
+        confirmar.disableProperty().bind(not(firstAvatar.or(secondAvatar).or(ThirdAvatar).or(FourAvatar).or(FiveAvatar)));
     }
 }

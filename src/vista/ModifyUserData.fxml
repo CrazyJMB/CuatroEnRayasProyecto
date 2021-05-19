@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ModifyUserDataController">
+    <stylesheets>
+        <URL value="@/visualizacion/modifyuserdata.css" />
+    </stylesheets>
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="506.0" prefHeight="720.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
+               <VBox.margin>
+                  <Insets bottom="25.0" top="40.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../img/Logo.png" />
+               </image>
+            </ImageView>
+            <Label text="Modificar datos">
+               <font>
+                  <Font name="Verdana Bold" size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+               <children>
+                  <Circle fx:id="avatarViewCircle" fill="DODGERBLUE" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button mnemonicParsing="false" onAction="#changeAvatar" styleClass="cambiarAvatar" text="Cambiar avatar" textFill="#00000098" />
+               </children>
+            </HBox>
+            <TextField fx:id="username" editable="false" prefHeight="35.0" promptText="Nombre de usuario" styleClass="usernameText">
+               <VBox.margin>
+                  <Insets left="80.0" right="80.0" top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="email" prefHeight="35.0" promptText="Correo electronico" styleClass="emailText">
+               <VBox.margin>
+                  <Insets left="80.0" right="80.0" top="15.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="password" prefHeight="35.0" promptText="Contraseña" styleClass="password">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="80.0" right="80.0" top="15.0" />
+               </VBox.margin>
+            </PasswordField>
+            <PasswordField fx:id="passwordRe" prefHeight="35.0" promptText="Repetir contraseña" styleClass="rePassword">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="80.0" right="80.0" top="15.0" />
+               </VBox.margin>
+            </PasswordField>
+            <DatePicker fx:id="dataPicker" prefHeight="35.0" promptText="Fecha de nacimiento" styleClass="dataPicker">
+               <VBox.margin>
+                  <Insets left="80.0" right="80.0" top="20.0" />
+               </VBox.margin>
+            </DatePicker>
+            <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+               <VBox.margin>
+                  <Insets top="35.0" />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="updateDataButton" mnemonicParsing="false" onAction="#updateUserData" styleClass="crearusuario" text="Actualizar datos">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#cancelButton" styleClass="cancelar" text="Cancelar">
+                     <HBox.margin>
+                        <Insets right="80.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

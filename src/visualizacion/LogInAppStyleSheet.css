@@ -11,18 +11,19 @@ and open the template in the editor.
 
 .username .password {
     -fx-background-color: gainsboro;
+    -fx-border-radius: 5;
 }
 
 .username:focused {
-    -fx-focus-color: #3b3366;
-    -fx-faint-focus-color: #3b3340;
-    -fx-inner-border: blue;
-    -fx-body-color: white;
-    
-    -fx-background-color: -fx-faint-focus-color, -fx-focus-color, -fx-inner-border, -fx-body-color; 
-    -fx-background-insets: -2, -0.3, 1, 2;
-    -fx-background-radius: 7, 6, 4, 3;
-    
+    -fx-background-color: none;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+}
+
+.password:focused {
+    -fx-background-color: none;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
 }
 
 .logInButton {
@@ -39,8 +40,11 @@ and open the template in the editor.
 
 .rememberPassword:hover {
     -fx-text-fill: black;
+    
+    -fx-cursor: hand;
 }
 
 .createNewAccount:hover {
     -fx-text-fill: black;
+    -fx-cursor: hand;
 }

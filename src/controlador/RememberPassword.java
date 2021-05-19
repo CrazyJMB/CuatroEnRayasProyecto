@@ -101,10 +101,12 @@ public class RememberPassword implements Initializable {
                     Parent LogInAppParent = FXMLLoader.load(getClass().getResource("/vista/ConfirmarCodigo.fxml"));
                     Scene LogInAppScene = new Scene(LogInAppParent);
 
+                    LogInAppScene.getStylesheets().add("/visualizacion/ConfirmarCodigoStyleSheet.css");
+                    
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setResizable(false);
                     window.setTitle("Recuperacion de contraseña");
                     window.setScene(LogInAppScene);
-                    window.setResizable(false);
                     window.show();
                 }
                 

@@ -6,6 +6,7 @@
 package controlador;
 
 import DBAccess.Connect4DAOException;
+import static controlador.ChangeAvatarController.selectedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -46,7 +47,7 @@ public class NewUserScreenController implements Initializable {
     
     private Connect4 db = null;
     
-    public Image avatarImage = new Image("/img/avatars/avatar1.png", false);
+    public static Image avatarImage = new Image("/img/avatars/avatar1.png", false);
             
     @FXML
     private Circle avatarViewCircle;
@@ -69,9 +70,6 @@ public class NewUserScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        // Instancia de esta clase
-        newUserScreenControler = this;
-        
         createNewUserButton.setDisable(true);
         
         // Inicializamos el dataPicker
@@ -92,31 +90,28 @@ public class NewUserScreenController implements Initializable {
     private void changeAvatar(ActionEvent event) {
         System.out.println(avatarImage);
         try {    
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            Parent root = loader.load(getClass().getResource("/vista/ChangeAvatar.fxml"));
-           
-            // Controlador de avatar
-            ChangeAvatarController controladorAvatar = loader.<ChangeAvatarController>getController();
+            Stage StageAux = new Stage();
+            Parent changeAvatarParent = FXMLLoader.load(getClass().getResource("/vista/ChangeAvatar.fxml"));
+            Scene changeAvatarScene = new Scene(changeAvatarParent);
             
-            stage.setScene(new Scene(root));
-            stage.setTitle("Seleccion de avatar");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            changeAvatarScene.getStylesheets().add("/visualizacion/ChangeAvatarStyleSheet.css");
+            
+            StageAux.setScene(changeAvatarScene);
+            StageAux.setTitle("Seleccion de avatar");
+            StageAux.initModality(Modality.APPLICATION_MODAL);
+            StageAux.showAndWait();
             
             // Actualizamos el avatar
-            if (controladorAvatar.getSelectedAvatar() != null) {
-                // Si hemos selecionado un avatar
-                avatarImage = controladorAvatar.getSelectedAvatar();
+            if (selectedImage != null) {
+                avatarImage = selectedImage;
             } else {
-                System.out.println("Avatar no selecionado");
+                System.out.println("Avatar no seleccionado");
             }
+            avatarViewCircle.setFill(new ImagePattern(avatarImage));
             
         } catch (IOException e) {
             System.out.println("Error al intentar cambiar de avatar");
         }
-        
-        avatarViewCircle.setFill(new ImagePattern(avatarImage));
     }
 
     @FXML
@@ -163,7 +158,7 @@ public class NewUserScreenController implements Initializable {
         // Creacion del usuario en la base de datos
         if (validUser && validEmail && validPassword && validPasswordRe && validaDataPicker) {
             try {
-                db.registerPlayer(username.getText(), email.getText(), password.getText(), avatarImage, dataPicker.getValue(), 0);
+                db.registerPlayer(username.getText(), email.getText(), password.getText(), selectedImage, dataPicker.getValue(), 0);
             } catch (Connect4DAOException e) {
                 System.out.println(e);
             }
