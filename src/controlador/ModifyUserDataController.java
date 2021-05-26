@@ -169,6 +169,7 @@ public class ModifyUserDataController implements Initializable {
             
             // Se obtiene la informacion de la ventana (Stage)
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            MainScreenScene.getStylesheets().add("/visualizacion/MainScreenStyleSheet.css");
             window.setTitle("Lobby");
             window.setScene(MainScreenScene);
             window.setResizable(false);

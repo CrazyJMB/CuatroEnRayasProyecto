@@ -185,6 +185,7 @@ public class InGameScreenController implements Initializable {
 
             // Se obtiene la informacion de la ventana (Stage)
             Stage window = (Stage) gridPane.getScene().getWindow();
+            InGameScene.getStylesheets().add("/visualizacion/MainScreenStyleSheet.css");
             window.setTitle("Lobby");
             window.setScene(InGameScene);
 

@@ -24,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -154,6 +155,22 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void seeRanking(ActionEvent event) {
+        try {
+            Parent rankingParent = FXMLLoader.load(getClass().getResource("/vista/Ranking.fxml"));
+            
+            Scene rankingScene = new Scene(rankingParent);
+
+            // Se obtiene la informacion de la ventana (Stage)
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Ranking");
+            window.setScene(rankingScene);
+            //Ventana reajustable
+            window.setResizable(false);
+            window.show();
+
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la escena");
+        }
     }
 
     @FXML
@@ -230,6 +247,10 @@ public class MainScreenController implements Initializable {
                 multiplayerPlay(new ActionEvent(multiplayerPlayButton, null));
             }
         }
+    }
+
+    @FXML
+    private void multiplayerCreateNewAccount(MouseEvent event) {
     }
     
 }

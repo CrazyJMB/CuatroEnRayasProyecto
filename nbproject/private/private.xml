@@ -3,11 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/data/University/2º%20Year/IPC/proyecto/CuatroEnRayasProyecto/src/visualizacion/MainScreenStyleSheet.css</file>
-            <file>file:/E:/data/University/2º%20Year/IPC/proyecto/CuatroEnRayasProyecto/src/vista/LogInApp.fxml</file>
-            <file>file:/E:/data/University/2º%20Year/IPC/proyecto/CuatroEnRayasProyecto/src/controlador/LogInAppController.java</file>
-            <file>file:/E:/data/University/2º%20Year/IPC/proyecto/CuatroEnRayasProyecto/src/controlador/MainScreenController.java</file>
-            <file>file:/E:/data/University/2º%20Year/IPC/proyecto/CuatroEnRayasProyecto/src/aplicacion/aplicacion.java</file>
+            <file>file:/E:/data/University/2º%20Year/IPC/proyecto/CuatroEnRayasProyecto/src/controlador/RankingController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -40,7 +40,6 @@ and open the template in the editor.
 
 .rememberPassword:hover {
     -fx-text-fill: black;
-    
     -fx-cursor: hand;
 }
 
