@@ -24,9 +24,6 @@ public class aplicacion extends Application {
         
         Scene scene = new Scene(root);
         
-        //Aplicar hoja de estilo a la escena
-        scene.getStylesheets().add("/visualizacion/LogInAppStyleSheet.css");
-        
         stage.setScene(scene);
         stage.setResizable(false);
         stage.getIcons().add(new Image("/img/Logo16x16.png", false));

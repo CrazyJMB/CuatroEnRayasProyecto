@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.HistorialPartidasRealizadasController">
     <stylesheets>
-        <URL value="@/visualizacion/historialpartidasrealizadas.css" />
+        <URL value="@CSS/basicColor.css" />
     </stylesheets>
    <children>
       <Label layoutX="461.0" layoutY="14.0" text="Historial partidas">

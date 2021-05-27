@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import model.Round;
 
@@ -35,6 +36,25 @@ public class HistorialPartidasRealizadasStatsController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        
+        
+        // Formato DatePicker
+        fechaIni.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate fecha = fechaFin.getValue();
+                setDisable(empty || date.compareTo(fecha) > 0 );
+            }
+        });
+        
+        fechaFin.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate fecha = fechaIni.getValue();
+                setDisable(empty || date.compareTo(fecha) < 0 );
+            }
+        });
     }    
 
     @FXML

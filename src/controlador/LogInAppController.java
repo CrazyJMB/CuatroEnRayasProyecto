@@ -105,7 +105,6 @@ public class LogInAppController implements Initializable {
                     Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/MainScreen.fxml"));
                     Scene InGameScene = new Scene(InGameParent);
                     
-                    InGameScene.getStylesheets().add("/visualizacion/MainScreenStyleSheet.css");
                     // Se obtiene la informacion de la ventana (Stage)
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.setTitle("Lobby");
@@ -129,8 +128,6 @@ public class LogInAppController implements Initializable {
             Stage stage = new Stage();
             Parent confirmarCodigoParent = FXMLLoader.load(getClass().getResource("/vista/RememberPassword.fxml"));
             Scene confirmarCodigoScene = new Scene(confirmarCodigoParent);
-
-            confirmarCodigoScene.getStylesheets().add("/visualizacion/ConfirmarCodigoStyleSheet.css");
             
             stage.setScene(confirmarCodigoScene);
             stage.setResizable(false);
@@ -148,8 +145,6 @@ public class LogInAppController implements Initializable {
         try {
             Parent newUserParent = FXMLLoader.load(getClass().getResource("/vista/NewUserScreen.fxml"));
             Scene newUserScene = new Scene(newUserParent);
-            
-            newUserScene.getStylesheets().add("/visualizacion/newUserScreenStyleSheet.css");
             
             // Se obtiene la informacion de la ventana (Stage)
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
