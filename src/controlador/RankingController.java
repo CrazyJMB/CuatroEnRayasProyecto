@@ -13,8 +13,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import model.Connect4;
 import model.Player;
 
@@ -33,7 +39,7 @@ import model.Player;
 public class RankingController implements Initializable {
 
     // Base de datos
-    Connect4 db = null;
+    private Connect4 db = null;
     
     private ObservableList<Player> observablePlayers;
     
@@ -115,5 +121,22 @@ public class RankingController implements Initializable {
         ranking.setItems(sortedData);
     }    
 
-    
+    @FXML
+    private void goMainScreen(ActionEvent event) {
+        try {
+            Parent mainScreenParent = FXMLLoader.load(getClass().getResource("/vista/MainScreen.fxml"));
+            Scene mainScreenScene = new Scene(mainScreenParent);
+
+            // Se obtiene la informacion de la ventana (Stage)
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Lobby");
+            window.setScene(mainScreenScene);
+            //Ventana reajustable
+            window.setResizable(false);
+            window.show();
+
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la escena");
+        }
+    }
 }

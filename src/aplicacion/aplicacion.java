@@ -20,7 +20,7 @@ public class aplicacion extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/LogInApp.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/HistorialPartidasRealizadas.fxml"));
         
         Scene scene = new Scene(root);
         

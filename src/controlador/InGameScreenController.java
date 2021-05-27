@@ -285,8 +285,10 @@ public class InGameScreenController implements Initializable {
         
         if (playingVSmachine) {
             if (playerOne.getNickName().equals("CPU") && turnoPlayer == true) {
+                
                 onClickGridPane(event);
             } else if (playerTwo.getNickName().equals("CPU") && turnoPlayer == false) {
+                
                 onClickGridPane(event);
             }
         }

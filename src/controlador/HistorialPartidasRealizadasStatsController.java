@@ -6,12 +6,14 @@
 package controlador;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.DatePicker;
+import model.Round;
 
 /**
  * FXML Controller class
@@ -25,7 +27,7 @@ public class HistorialPartidasRealizadasStatsController implements Initializable
     @FXML
     private DatePicker fechaFin;
     @FXML
-    private BarChart<?, ?> barChart;
+    private BarChart<LocalDate, Round> barChart;
 
     /**
      * Initializes the controller class.

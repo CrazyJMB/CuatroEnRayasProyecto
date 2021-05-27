@@ -252,5 +252,24 @@ public class MainScreenController implements Initializable {
     @FXML
     private void multiplayerCreateNewAccount(MouseEvent event) {
     }
+
+    @FXML
+    private void verHistorial(ActionEvent event) {
+        try {
+                Parent InGameParent = FXMLLoader.load(getClass().getResource("/vista/HistorialPartidasRealizadas.fxml"));
+                Scene InGameScene = new Scene(InGameParent);
+
+                // Se obtiene la informacion de la ventana (Stage)
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Historial");
+                window.setScene(InGameScene);
+                //Ventana reajustable
+                window.setResizable(false);
+                window.show();
+
+            } catch (Exception e) {
+                System.out.println("No se pudo cargar la escena");
+            }
+    }
     
 }
