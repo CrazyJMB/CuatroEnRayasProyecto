@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.NavigableMap;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleObjectProperty;
@@ -195,14 +193,12 @@ public class HistorialPartidasRealizadasController implements Initializable {
         NavigableMap<LocalDate, List<Round>> roundPerDayReverse = roundPerDay.descendingMap();
         
         roundPerDayReverse.forEach((LocalDate date, List<Round> rounds) -> {
-            //System.out.println("Dia: " + date + "partidas jugadas: " + rounds.size());
             
             // Mostar partidas
             if (date.isEqual(fechaInicio.getValue()) || date.isEqual(fechaFin.getValue()) ||
                     (date.isAfter(fechaInicio.getValue()) && date.isBefore(fechaFin.getValue()))) {
                 for (int i = 0; i < rounds.size(); i++) {
                     Round aux = rounds.get(i);
-                    //System.out.println(aux); 
                     observableRound.add(aux);
                 }
             }
@@ -218,8 +214,6 @@ public class HistorialPartidasRealizadasController implements Initializable {
                 i.getWinner().getNickName().startsWith(nickPlayer.getText()) ||
                     i.getLoser().getNickName().startsWith(nickPlayer.getText()));
         
-          
-        System.out.println(filteredList);
         tablaHistorial.setItems(filteredList);
     }
 
